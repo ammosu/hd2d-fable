@@ -1,0 +1,14 @@
+node_modules/
+.godot/
+dist/
+__pycache__/
+*.pyc
+# 匿名評審用的截圖複本（來源都在 shots/）
+/judge*/
+# 商業遊戲的商店截圖，只供本機比對，不進版控
+/refs/
+/refs_hd2d/
+# Godot 官方文件的本機複本
+**/tools/doc/
+# codex 執行紀錄（含本機環境訊息）
+*.log
