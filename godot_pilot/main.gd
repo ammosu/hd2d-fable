@@ -1660,6 +1660,12 @@ func build_zones() -> void:
 	var doors := ["w_door_a", "w_door_b", "doors_0", "doors_1", "doors_2"]
 	var mk := func(x0: float, x1: float, zb: float, zf: float, hgt: float, ridge: String, lights: bool) -> void:
 		var w := x1 - x0
+		# 靠後緣的房子原本只有 1 m 深（像一片立面），改成往後延伸到低一階的地上，底下補石砌地基
+		if zf - zb < 2.0:
+			zb = zf - rng.randf_range(4.0, 4.8)
+			var gfd := geo("stonewall")
+			gfd.box(Vector3((x0 + x1) * 0.5, LOW_Y, (zb + BACK_Z) * 0.5), Vector3(w, -LOW_Y, BACK_Z - zb))
+			put(gfd, "stonewall", {"tint": Color(0.8, 0.75, 0.9)}, false)
 		var items := [[doors[rng.randi() % doors.size()], "f", rng.randf_range(-w * 0.3, w * 0.3), 0.3, 0.0]]
 		for k in int(w / 1.6):
 			var ox := -w * 0.5 + 0.9 + k * 1.6
@@ -1758,7 +1764,7 @@ func build_zones() -> void:
 	reg_on = false
 	# 後排（低一階）的房子，讓屋頂後面還有層次
 	for xs in [[-30.0, -25.0], [-44.0, -38.0], [-56.0, -50.0], [20.0, 25.5], [33.0, 38.0], [46.0, 52.0]]:
-		house_at({"x0": xs[0], "x1": xs[1], "zb": -13.5, "zf": -9.9, "h": 3.4, "rh": 1.5, "ridge": "z", "tint": Color(0.92, 0.86, 0.82), "roof": roofs[rng.randi() % roofs.size()], "roof_tint": Color(0.9, 0.85, 0.95), "cast": false, "lights": false,
+		house_at({"x0": xs[0], "x1": xs[1], "zb": -17.8, "zf": -13.6, "h": 3.4, "rh": 1.5, "ridge": "z", "tint": Color(0.92, 0.86, 0.82), "roof": roofs[rng.randi() % roofs.size()], "roof_tint": Color(0.9, 0.85, 0.95), "cast": false, "lights": false,
 			"items": [[wins[rng.randi() % wins.size()], "f", 0.0, 2.6, W]]}, LOW_Y)
 	parent_node = self
 	dress_zones()
@@ -2855,7 +2861,7 @@ func tunnel_start(next: int, dirn: float) -> void:
 	if not cam_basis_set: cam_basis0 = cam.global_transform.basis; cam_basis_set = true
 	tun_rel0 = cam.global_position - boat.position
 	tun_on = true; tun_t = 0.0; tun_dir = dirn; tun_next = next
-	boat.position = Vector3(TUN_X - 9.0 if dirn > 0.0 else TUN_X + TUN_L + 9.0, boat.position.y, LANE_Z)
+	boat.position = Vector3(TUN_X - 3.5 if dirn > 0.0 else TUN_X + TUN_L + 3.5, boat.position.y, LANE_Z)      # 一淡入船頭就在洞口：前一站已經靠近了，不再多划一段
 	boat.rotation.y = 0.0 if dirn > 0.0 else PI
 	boat_vel = dirn * 3.2
 	for g in tun_glow: g.visible = false
