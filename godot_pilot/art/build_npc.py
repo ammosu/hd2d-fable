@@ -18,6 +18,9 @@ NPC = {
  'cat':    dict(raw='cat_v3.png', pitch=(22.5, 24.8), cls={'orange': ['R6', 'H3', 'L1'], 'brown': ['D2', 'D3', 'D4', 'H2'], 'red': ['H2', 'R6'], 'yellow': ['H3', 'P4'], 'grey': ['M1', 'P4']}),
  'fisher': dict(raw='fisher_v1.png', pitch=(18.2, 19.6), cls={'orange': ['D5', 'L1', 'R6'], 'grey': ['M1', 'M0', 'W2', 'W3', 'S3'], 'red': ['R6', 'R7', 'D4']},
                 band=(0, 22, {k: ['L2', 'P2', 'P3', 'P1', 'D4'] for k in ('skin', 'orange', 'red', 'brown', 'yellow', 'pink', 'white', 'grey')})),      # 草帽（第 0–21 列）一律用稻草色階
+ 'npc_veg': dict(raw='npc_veg_v1.png', pitch=(19.2, 20.6), cls={'yellow': ['L2', 'P2', 'P3', 'P1'], 'red': ['R1', 'R2', 'R3', 'R4']}),          # 新區：賣菜婦人
+ 'npc_girl': dict(raw='npc_girl_v1.png', pitch=(22.8, 24.4), cls={'yellow': ['H3', 'L2', 'P2', 'D5'], 'orange': ['H3', 'D5', 'L1']}),        # 新區：提籃小女孩（金棕髮）
+ 'npc_accordion': dict(raw='npc_accordion_v1.png', pitch=(20.4, 21.8)),                                                                   # 新區：拉手風琴的老爺爺
 }
 def classify(o):
     r, g, b = [o[..., i].astype(np.float32) for i in range(3)]; mx = np.maximum(np.maximum(r, g), b); mn = np.minimum(np.minimum(r, g), b); sm = r + g + b

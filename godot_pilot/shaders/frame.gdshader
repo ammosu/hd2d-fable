@@ -12,6 +12,8 @@ void vertex() {
 }
 void fragment() {
 	vec2 uv = UV;
+	if (flip.x < 0.0) uv.x = 1.0 - uv.x;
+	if (flip.y < 0.0) uv.y = 1.0 - uv.y;
 	vec4 c = texture(tex, uv);
 	ALBEDO = c.rgb * tint.rgb;
 	ALPHA = c.a * tint.a;
